@@ -18,8 +18,11 @@ const productSchema = new mongoose.Schema({
     description:{
         type:String
     },
-    category:{
+    date:{
         type:String
+    },
+    stock:{
+        type:Number
     }
 });
 

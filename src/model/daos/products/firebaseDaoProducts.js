@@ -1,4 +1,4 @@
-import { FirebaseManager } from "../../managers/firebase.manager"
+import { FirebaseManager } from "../../managers/firebase.manager.js"
 
 class FirebaseDAOProducts extends FirebaseManager {
 	constructor(nameCollection) {

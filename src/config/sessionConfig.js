@@ -7,7 +7,7 @@ export default session({
         mongoUrl: options.mongo.urlSessionDatabase,
         ttl: 600,
     }),
-    secret: "claveSuperHyperUltraMegaSuperSecreta",
+    secret: options.mongo.sessionHash,
     resave: false,
     saveUninitialized: false,
 })

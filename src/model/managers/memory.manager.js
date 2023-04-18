@@ -1,4 +1,4 @@
-class MemoryContainer {
+class MemoryManager {
 	constructor() {
 		this.productos = []
 	}
@@ -11,13 +11,13 @@ class MemoryContainer {
 		const id = this.productos.length + 1
 		producto.id = id
 		this.productos.push(producto)
-		return id
+		return `Saved sucessfully with id ${id}`
 	}
 
 	getById(id) {
 		let producto = this.productos.find((element) => element.id == id)
 		if (producto == undefined) {
-			producto = { error: "producto no encontrado" }
+			producto = { error: "not found" }
 		}
 		return producto
 	}
@@ -44,11 +44,11 @@ class MemoryContainer {
 	updateById(id, object) {
 		let index = this.productos.findIndex((element) => element.id == id)
 		if (index == -1) {
-			return { error: "producto no encontrado" }
+			return { error: "not found" }
 		}
 		object.id = id
 		this.productos[index] = object
-		return { msg: "producto reemplazado" }
+		return { msg: "updated succesfully" }
 	}
 }
 

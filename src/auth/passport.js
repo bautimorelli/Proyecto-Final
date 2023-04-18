@@ -30,10 +30,13 @@ const authPassport = (passport) => {
 							message: "El usuario ya existe",
 						})
 					const newUser = {
-						name: req.body.name,
-						phoneNumber: req.body.phoneNumber,
 						email: username,
 						password: bcrypt.hashSync(password, 10, null),
+						name: req.body.name,
+						address: req.body.address,
+						age: req.body.age,
+						phoneNumber: req.body.phoneNumber,
+						avatar: req.body.avatar
 					}
 					let userCreated = await UserModel.create(newUser)
 					return done(null, userCreated)

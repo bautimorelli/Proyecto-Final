@@ -1,5 +1,6 @@
 import passport from "passport"
 import { authPassport } from "../auth/passport.js"
+import { transporter } from "../config/messages/email.js"
 
 authPassport(passport)
 
@@ -17,27 +18,64 @@ class AuthController{
 
     static postLogin(req, res){
         if (req.isAuthenticated()) {
-			console.log("usuario logeado")
-			res.redirect("home")
+            res.status(200).json({
+                status:"SUCCESS",
+                message:"Usuario Autenticado"
+            })
 		}
     }
 
     static postSignup(req, res){
-        res.redirect("/home")
-    }
-
-    static authError(req, res){
-        res.render("error", { message: req.session.messages.pop() })
-    }
-
-    static logout(req, res){
-        const user = req.user
-        req.session.destroy((error) => {
-            if (error) return res.send("Hubo un error al cerrar la sesion")
-            res.render("logout", { user })
+        sendNewUserEmail(req)
+        res.status(200).json({
+            status:"SUCCESS",
+            message:"Usuario Registrado y Autenticado"
         })
     }
 
+    static authError(req, res){
+        res.status(400).json({
+            status:"ERROR",
+            message: req.session.messages.pop()
+        })
+    }
+
+    static logout(req, res){
+        req.logOut(error => {
+            if (error){
+                res.status(400).json({
+                    status:"ERROR",
+                    message: "No se pudo cerrar la session"
+                })
+            }
+            res.status(200).json({
+                status:"SUCCESS",
+                message:"La sesion ha sido cerrada"
+            })
+        })
+    }
+}
+
+async function sendNewUserEmail(req) {
+    const user = {
+        email: req.body.email,
+        name: req.body.name,
+        address: req.body.address,
+        age: req.body.age,
+        phoneNumber: req.body.phoneNumber,
+        pictureURL: req.body.pictureURL
+    }
+
+    const emailTemplate = JSON.stringify(user, null, 2)
+
+    const mailOptions = {
+        from: 'Servidor app Node',
+        to: process.env.NODEMAILER_EMAIL,
+        subject :"Nuevo Registro",
+        html: emailTemplate
+    }
+
+    await transporter.sendMail(mailOptions)
 }
 
 export {AuthController}

@@ -2,7 +2,7 @@ import admin from "firebase-admin"
 
 const db = admin.firestore()
 
-class FirebaseContainer {
+class FirebaseManager {
 	constructor(nameCollection) {
 		this.collection = db.collection(nameCollection)
 	}

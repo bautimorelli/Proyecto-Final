@@ -5,9 +5,9 @@ import path from "path"
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-class FileContainer {
+class FileManager {
 	constructor(filename) {
-		this.ruta = path.join(__dirname, "..", `files/${filename}`)
+		this.ruta = path.join(__dirname, "..", `/filesDB/${filename}.json`)
 	}
 
 	async readFile() {

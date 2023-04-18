@@ -3,32 +3,31 @@ import mongoose from "mongoose"
 const cartCollection = "carts"
 
 const itemSchema = new mongoose.Schema({
+    product_id:{
+        type:String
+    },
     name:{
         type:String
     },
     thumbnail:{
         type:String
     },
-    amount:{
+    price:{
         type:Number
     }
 })
 
 const cartSchema = new mongoose.Schema({
-    user:{
+    date:{
         type:String,
         require:true
     },
-    date:{
+    owner_id:{
         type:String,
         require:true
     },
     items:{
         type:[itemSchema],
-        require:true
-    },
-    deliveryAddress:{
-        type:String,
         require:true
     }
 })

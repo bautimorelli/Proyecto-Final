@@ -1,24 +1,20 @@
 import express from "express"
 import { authRouter } from "./api/auth.routes.js"
-import { userRouter } from "./api/user.routes.js"
 import { productRouter } from "./api/product.routes.js"
-import { messageRouter } from "./api/message.routes.js"
-import { routeLogger } from "../services/middleware/routeLogger.js"
-import { authLogin } from "../services/middleware/authLogin.js"
+import { cartRouter } from "./api/carts.routes.js"
+import { checkUserLogged } from "../services/middleware/loggedAuth.js"
 
 const router = express.Router()
 
-router.get("/home", authLogin, routeLogger, (req, res) => {
-	res.render("home", { user: req.user })
-})
-
-router.get("/", routeLogger, (req, res) => {
-	res.redirect("/home")
-})
-
 router.use("", authRouter)
-router.use("/user", userRouter)
-router.use("/product", productRouter)
-router.use("/message", messageRouter)
+router.use("/products", checkUserLogged, productRouter)
+router.use("/carts", checkUserLogged, cartRouter)
 
-export { router as apiRouter}
+router.use((req, res, next) => {
+	res.status(404).json({
+		status: "NOT FOUND",
+		message: `ruta ${req.url} con el metodo ${req.method} no implementado`,
+	})
+})
+
+export { router as apiRouter }
