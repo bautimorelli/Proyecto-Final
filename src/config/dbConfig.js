@@ -10,9 +10,9 @@ const objArgs = ParsedArgs(process.argv.slice(2), {
         e:"env"
     },
     default:{
-        port:process.env.DEFAULT_PORT,
-        mode:process.env.DEFAULT_MODE,
-        env:process.env.DEFAULT_ENV
+        port:process.env.PORT,
+        mode:process.env.MODE,
+        env:process.env.ENV
     }
 })
 
