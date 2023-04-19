@@ -15,7 +15,7 @@ class FileManager {
 			const contenido = await fs.promises.readFile(this.ruta, "utf-8")
 			return JSON.parse(contenido)
 		} catch (error) {
-			console.log("Error de lectura", error)
+			throw new Error("Error de lectura", error)
 		}
 	}
 
@@ -23,7 +23,7 @@ class FileManager {
 		try {
 			await fs.promises.writeFile(this.ruta, content)
 		} catch (error) {
-			console.log("Error de escritura", error)
+			throw new Error("Error de escritura", error)
 		}
 	}
 
@@ -36,7 +36,7 @@ class FileManager {
 				return []
 			}
 		} catch (error) {
-			console.log("Error al conseguir los objetos del archivo", error)
+			throw new Error("Error al conseguir los objetos del archivo", error)
 		}
 	}
 
@@ -55,7 +55,7 @@ class FileManager {
 				return 1
 			}
 		} catch (error) {
-			console.log("Error al guardar", error)
+			throw new Error("Error al guardar", error)
 		}
 	}
 
@@ -69,11 +69,10 @@ class FileManager {
 				}
 				return object
 			} else {
-				console.log("El archivo no existe")
-				return null
+				throw new Error("El archivo no existe")
 			}
 		} catch (error) {
-			console.log("Error al conseguir por id", error)
+			throw new Error("Error al conseguir por id", error)
 		}
 	}
 
@@ -96,10 +95,10 @@ class FileManager {
 				await this.writeFile(JSON.stringify(result, null, 2))
 				return "delete successfully"
 			} else {
-				console.log("El archivo no existe")
+				throw new Error("El archivo no existe")
 			}
 		} catch (error) {
-			console.log("Error al borrar por id", error)
+			throw new Error("Error al borrar por id", error)
 		}
 	}
 
@@ -108,7 +107,7 @@ class FileManager {
 			await this.writeFile("[]", null, 2)
 			return "delete successfully"
 		} catch (error) {
-			console.log("Error al borrar todos", error)
+			throw new Error("Error al borrar todos", error)
 		}
 	}
 
@@ -124,7 +123,7 @@ class FileManager {
 			await this.writeFile(JSON.stringify(objects, null, 2))
 			return objects
 		} catch (error) {
-			console.log(error)
+			throw new Error(error)
 		}
 	}
 }

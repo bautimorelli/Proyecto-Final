@@ -1,3 +1,4 @@
+
 class MongoManager {
 	constructor(model) {
 		this.model = model

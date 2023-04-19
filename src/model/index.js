@@ -5,10 +5,11 @@ import firebaseInit from "./clients/dbClientFirebase.js"
 import { options } from "../config/dbConfig.js"
 import { MongoManager } from "./managers/mongo.manager.js"
 import { UserModel } from "./dbmodels/user.model.js"
+import { logger } from "../services/logger/logger.js"
 
 const myClient = new MyMongoClient()
 await myClient.connect(options.mongo.urlMainDatabase)
-console.log("Base de datos de Mongo conectada")
+logger.info("Base de datos de usuarios Mongo conectada")
 
 const dbType = options.server.DB_TYPE
 
@@ -25,6 +26,7 @@ switch (dbType) {
         )
         CartManager = new MongoDAOCarts(CartModel)
         ProductManager = new MongoDAOProducts(ProductModel)
+        logger.info("Servidor iniciado con Mongo como base de datos")
         break
     case "firebase":
         firebaseInit(options.firebase.urlMainDatabase)
@@ -36,6 +38,7 @@ switch (dbType) {
         )
         CartManager = new FirebaseDAOCarts("carts")
         ProductManager = new FirebaseDAOProducts("products")
+        logger.info("Servidor iniciado con Firebase como base de datos")
         break
     case "file":
         const { FileDAOCarts } = await import(
@@ -46,6 +49,7 @@ switch (dbType) {
         )
         CartManager = new FileDAOCarts("carts")
         ProductManager = new FileDAOProducts("products")
+        logger.info("Servidor iniciado con Archivos como base de datos")
         break
     case "memory":
         const { MemoryDAOCarts } = await import(
@@ -56,6 +60,7 @@ switch (dbType) {
         )
         CartManager = new MemoryDAOCarts()
         ProductManager = new MemoryDAOProducts()
+        logger.info("Servidor iniciado con Memoria como base de datos")
         break
     default:
         break

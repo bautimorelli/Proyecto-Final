@@ -17,7 +17,7 @@ class FirebaseManager {
 			}))
 			return objects
 		} catch (error) {
-			console.log("Error al conseguir los objetos de firebase", error)
+			throw new Error("Error al conseguir los objetos de firebase", error)
 		}
 	}
 
@@ -27,7 +27,7 @@ class FirebaseManager {
 			await doc.create(object)
 			return doc.id
 		} catch (error) {
-			console.log("Error al guardar", error)
+			throw new Error("Error al guardar", error)
 		}
 	}
 
@@ -38,7 +38,7 @@ class FirebaseManager {
 			const response = item.data()
 			return response
 		} catch (error) {
-			console.log("Error al conseguir por id", error)
+			throw new Error("Error al conseguir por id", error)
 		}
 	}
 
@@ -48,7 +48,7 @@ class FirebaseManager {
 			await doc.delete()
 			return "delete successfully"
 		} catch (error) {
-			console.log("Error al borrar por id", error)
+			throw new Error("Error al borrar por id", error)
 		}
 	}
 
@@ -58,7 +58,7 @@ class FirebaseManager {
 			await doc.delete()
 			return "delete successfully"
 		} catch (error) {
-			console.log("Error al borrar todos", error)
+			throw new Error("Error al borrar todos", error)
 		}
 	}
 
@@ -68,7 +68,7 @@ class FirebaseManager {
 			const response = await doc.update(object)
 			return response
 		} catch (error) {
-			console.log(error)
+			throw new Error("Error al actualizar por id", error)
 		}
 	}
 }

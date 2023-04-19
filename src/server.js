@@ -6,6 +6,7 @@ import os from "os"
 import session from "./config/sessionConfig.js"
 import { apiRouter } from "./routes/index.js"
 import { options } from "./config/dbConfig.js"
+import { logger } from "./services/logger/logger.js"
 
 //.....Config Argumentos
 const PORT = options.server.PORT
@@ -29,20 +30,21 @@ app.use(apiRouter)
 //.....Cluster
 if (MODE === "CLUSTER" && cluster.isPrimary) {
 	const cpuAmount = os.cpus().length
-	console.log(`Cantidad de nucleos: ${cpuAmount}`)
+	logger.info(`Cantidad de nucleos: ${cpuAmount}`)
 	for (let index = 0; index < cpuAmount; index++) {
 		cluster.fork()
 	}
 	cluster.on("exit", (worker) => {
-		console.log(`El proceso ${worker.process.pid} ha dejado de funcionar`)
+		logger.info(`El proceso ${worker.process.pid} ha dejado de funcionar`)
 		cluster.fork()
 	})
 } else {
 	const server = app.listen(PORT, () =>
-		console.log(
+		logger.info(
 			`http://localhost:${PORT} - Server listening on port ${PORT} on process ${process.pid}`
 		)
 	)
+	server.on("error", (error) => logger.error(`Error in server ${error}`))
 }
 
 export { app }

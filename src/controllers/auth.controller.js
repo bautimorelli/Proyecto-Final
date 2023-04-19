@@ -1,6 +1,7 @@
 import passport from "passport"
 import { authPassport } from "../auth/passport.js"
 import { transporter } from "../config/messages/email.js"
+import { logger } from "../services/logger/logger.js"
 
 authPassport(passport)
 
@@ -57,25 +58,30 @@ class AuthController{
 }
 
 async function sendNewUserEmail(req) {
-    const user = {
-        email: req.body.email,
-        name: req.body.name,
-        address: req.body.address,
-        age: req.body.age,
-        phoneNumber: req.body.phoneNumber,
-        pictureURL: req.body.pictureURL
+    try {
+        const user = {
+            email: req.body.email,
+            name: req.body.name,
+            address: req.body.address,
+            age: req.body.age,
+            phoneNumber: req.body.phoneNumber,
+            pictureURL: req.body.pictureURL
+        }
+    
+        const emailTemplate = JSON.stringify(user, null, 2)
+    
+        const mailOptions = {
+            from: 'Servidor app Node',
+            to: process.env.NODEMAILER_EMAIL,
+            subject :"Nuevo Registro",
+            html: emailTemplate
+        }
+    
+        await transporter.sendMail(mailOptions)
+    } catch (error) {
+        logger.error("Error al enviar mail de usuario nuevo")
     }
-
-    const emailTemplate = JSON.stringify(user, null, 2)
-
-    const mailOptions = {
-        from: 'Servidor app Node',
-        to: process.env.NODEMAILER_EMAIL,
-        subject :"Nuevo Registro",
-        html: emailTemplate
-    }
-
-    await transporter.sendMail(mailOptions)
+    
 }
 
 export {AuthController}
