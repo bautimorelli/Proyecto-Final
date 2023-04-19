@@ -19,7 +19,6 @@ class MyMongoClient {
 			)
 		}
 	}
-
 }
 
 export { MyMongoClient }

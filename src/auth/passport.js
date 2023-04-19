@@ -36,7 +36,7 @@ const authPassport = (passport) => {
 						address: req.body.address,
 						age: req.body.age,
 						phoneNumber: req.body.phoneNumber,
-						avatar: req.body.avatar
+						avatar: req.body.avatar,
 					}
 					let userCreated = await UserModel.create(newUser)
 					return done(null, userCreated)

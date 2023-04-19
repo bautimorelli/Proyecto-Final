@@ -1,4 +1,4 @@
-import { ProductManager } from "../model/index.js";
+import { ProductManager } from "../model/index.js"
 import { formatedDate } from "../util.js"
 
 class ProductService {

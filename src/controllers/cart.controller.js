@@ -92,7 +92,7 @@ class CartController {
 			)
 			product.id = req.params.id_prod
 			const productDto = convertProductToDto(product)
-			cart.items.push({...productDto})
+			cart.items.push({ ...productDto })
 			const response = await CartService.updateCart(req.params.id, cart)
 			res.status(200).json({
 				status: "SUCCESS",
@@ -159,7 +159,6 @@ async function sendCheckoutNotificactions(req, cart) {
 		}
 		await transporter.sendMail(mailOptions)
 
-
 		const user = await UserService.getUserById(cart.owner_id)
 		await twilioClient.messages.create({
 			from: process.env.TWILIO_PHONENUMBER,
@@ -175,7 +174,6 @@ async function sendCheckoutNotificactions(req, cart) {
 	} catch (error) {
 		logger.error("Error al enviar notificacion de checkout")
 	}
-	
 }
 
 export { CartController }

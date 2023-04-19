@@ -17,7 +17,9 @@ class MemoryManager {
 	getById(id) {
 		let producto = this.productos.find((element) => element.id == id)
 		if (producto == undefined) {
-			throw new Error("Error al conseguir por id: id de producto no existe")
+			throw new Error(
+				"Error al conseguir por id: id de producto no existe"
+			)
 		}
 		return producto
 	}
@@ -44,7 +46,9 @@ class MemoryManager {
 	updateById(id, object) {
 		let index = this.productos.findIndex((element) => element.id == id)
 		if (index == -1) {
-			throw new Error("Error al actualizar por id: id de producto no existe")
+			throw new Error(
+				"Error al actualizar por id: id de producto no existe"
+			)
 		}
 		object.id = id
 		this.productos[index] = object

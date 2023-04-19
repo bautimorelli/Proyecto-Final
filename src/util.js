@@ -1,10 +1,10 @@
-import {fileURLToPath} from 'url'
-import { dirname } from 'path'
+import { fileURLToPath } from "url"
+import { dirname } from "path"
 
 const __dirname = fileURLToPath(dirname(import.meta.url))
 
 function formatedDate() {
-    const date = new Date()
+	const date = new Date()
 
 	const dd = date.getDate()
 	const mm = date.getMonth() + 1
@@ -18,4 +18,4 @@ function formatedDate() {
 	return formatedDate
 }
 
-export {__dirname, formatedDate}
+export { __dirname, formatedDate }

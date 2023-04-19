@@ -13,4 +13,4 @@ router.delete("/:id", ProductController.deleteProduct)
 
 router.get("/:id", ProductController.getProductById)
 
-export {router as productRouter}
+export { router as productRouter }

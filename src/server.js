@@ -7,6 +7,7 @@ import session from "./config/sessionConfig.js"
 import { apiRouter } from "./routes/index.js"
 import { options } from "./config/dbConfig.js"
 import { logger } from "./services/logger/logger.js"
+import { routeLogger } from "./services/middleware/routeLogger.js"
 
 //.....Config Argumentos
 const PORT = options.server.PORT
@@ -25,7 +26,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 //.....Routes
-app.use(apiRouter)
+app.use(routeLogger, apiRouter)
 
 //.....Cluster
 if (MODE === "CLUSTER" && cluster.isPrimary) {

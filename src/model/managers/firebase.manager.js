@@ -65,7 +65,9 @@ class FirebaseManager {
 	async updateById(id, object) {
 		try {
 			const doc = this.collection.doc(id)
-			const response = await doc.update(object)
+			await doc.update(object)
+			const item = await doc.get()
+			const response = item.data()
 			return response
 		} catch (error) {
 			throw new Error("Error al actualizar por id", error)
